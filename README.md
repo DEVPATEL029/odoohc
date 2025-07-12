@@ -77,16 +77,21 @@ Built for small communities, teams, or internal orgs looking for a **lightweight
 ---
 ## Getting Started
 ### 1️ Clone the Repository
+```
 bash
 git clone https://github.com/yourusername/stackit.git
 cd stackit/server
+```
 
 ### 2 Install Dependencies
+```
 bash
 npm install
+```
 
 ### 3️ Environment Setup
 Create a .env file in the server/ directory:
+```
 env
 PORT=5000
 MONGO_URI=your_mongodb_connection_string
@@ -95,11 +100,14 @@ CLOUDINARY_CLOUD_NAME=your_cloud_name
 CLOUDINARY_API_KEY=your_api_key
 CLOUDINARY_API_SECRET=your_api_secret
 OPENAI_API_KEY=your_openai_api_key   # optional
+```
 
 ### 4️ Start the Development Server
+```
 bash
 npm run dev
 Server runs on: http://localhost:5000
+```
 
 ## Deployment Plan
 Component	Platform

@@ -33,6 +33,6 @@ QueRouter.put('/api/update-question/:id', Authorization, updateQuestion);
 QueRouter.delete('/api/delete-question/:id', Authorization, deleteQuestion);
 
 // For accepting answer
-QueRouter.put('api/:questionId/accept-answer/:answerId', authenticateUser, acceptAnswer);
+QueRouter.put('api/:questionId/accept-answer/:answerId', Authorization, acceptAnswer);
 
 export {QueRouter};

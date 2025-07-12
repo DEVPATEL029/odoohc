@@ -6,28 +6,31 @@ import "react-quill/dist/quill.snow.css";
 const AskQuestion = () => {
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
-  const [tagsInput, setTagsInput] = useState("");
   const [tags, setTags] = useState([]);
+  const [tagInput, setTagInput] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const handleTags = (e) => {
-    setTagsInput(e.target.value);
-    const newTags = e.target.value
-      .split(",")
-      .map((tag) => tag.trim())
-      .filter((tag) => tag);
-    setTags(newTags);
+  const handleAddTag = () => {
+    const trimmed = tagInput.trim();
+    if (trimmed && !tags.includes(trimmed)) {
+      setTags([...tags, trimmed]);
+    }
+    setTagInput("");
+  };
+
+  const handleRemoveTag = (index) => {
+    setTags(tags.filter((_, i) => i !== index));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!title.trim() || !desc.trim() || tags.length === 0) {
-      setError("All fields are required.");
+    const plainDesc = desc.replace(/<[^>]*>/g, "").trim();
+
+    if (!title.trim() || !plainDesc) {
+      setError("Title and Description are required.");
       return;
     }
-
-    const plainDesc = desc.replace(/<[^>]*>/g, "").trim(); // Strip HTML tags
 
     const newQuestion = {
       title,
@@ -87,27 +90,39 @@ const AskQuestion = () => {
         {/* Tags */}
         <div>
           <label className="block mb-1 text-sm font-medium text-gray-700">Tags</label>
-          <div className="overflow-hidden border border-gray-300 rounded-lg">
-            <input
-              type="text"
-              placeholder="e.g. react, css, javascript"
-              value={tagsInput}
-              onChange={handleTags}
-              className="w-full p-2 text-sm focus:outline-none focus:ring-1 focus:ring-blue-500"
-            />
-          </div>
-          <div className="flex flex-wrap gap-1 mt-1">
-            {tags.map((tag, i) => (
+          <div className="flex flex-wrap gap-2 mb-2">
+            {tags.map((tag, index) => (
               <span
-                key={i}
-                className="px-2 py-1 text-xs text-blue-700 bg-blue-100 rounded-full shadow-sm"
+                key={index}
+                className="inline-flex items-center px-2 py-1 text-xs text-blue-800 bg-blue-100 rounded-full"
               >
                 {tag}
+                <button
+                  type="button"
+                  onClick={() => handleRemoveTag(index)}
+                  className="ml-1 text-blue-500 hover:text-red-500"
+                >
+                  &times;
+                </button>
               </span>
             ))}
           </div>
+          <input
+            type="text"
+            placeholder="Press Enter to add tag"
+            value={tagInput}
+            onChange={(e) => setTagInput(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                e.preventDefault();
+                handleAddTag();
+              }
+            }}
+            className="w-full p-2 text-sm border border-gray-300 rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500"
+          />
         </div>
 
+        {/* Error message */}
         {error && <p className="text-xs text-red-500">{error}</p>}
 
         {/* Buttons */}

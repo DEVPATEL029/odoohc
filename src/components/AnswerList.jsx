@@ -1,16 +1,29 @@
-const AnswerList = ({ answers }) => {
+const AnswerList = ({ answers, onUpvote, onDownvote }) => {
   return (
-    <ul className="space-y-2">
-      {answers.map((ans, index) => (
-        <li
-          key={index}
-          className="border rounded p-2 flex justify-between items-center"
-        >
-          <span>{ans.text}</span>
-          <button className="text-blue-600 hover:underline">▲ Upvote</button>
-        </li>
+    <div>
+      {answers.map((answer) => (
+        <div key={answer.id} className="answer-card">
+          <div className="text-center">
+            <button
+              className="vote-btn"
+              onClick={() => onUpvote(answer.id)}
+              disabled={answer.upvoted}
+            >
+              ▲
+            </button>
+            <div>{answer.votes}</div>
+            <button
+              className="vote-btn"
+              onClick={() => onDownvote(answer.id)}
+              disabled={answer.downvoted}
+            >
+              ▼
+            </button>
+          </div>
+          <div className="answer-text">{answer.text}</div>
+        </div>
       ))}
-    </ul>
+    </div>
   );
 };
 

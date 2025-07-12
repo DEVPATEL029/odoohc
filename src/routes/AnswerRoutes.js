@@ -1,11 +1,35 @@
 // src/routes/TagRoutes.js
 
 import express from 'express';
-import { voteAnswer } from '../Controller/AnswerController.js';
-import { Authentication } from '../middleware/Auth.js'; // optional if only admins can create/delete
+import {
+  addAnswer,
+  updateAnswer,
+  deleteAnswer,
+  getAnswersByQuestion,
+  getSingleAnswer,
+  voteAnswer
+} from '../Controller/AnswerController.js';
+
+import { authenticateUser } from '../middleware/Auth.js';
 
 const AnsRouter = express.Router();
 
-AnsRouter.post('/api/:id/vote', Authentication, voteAnswer);
+// ✅ Add an answer (requires auth)
+AnsRouter.post('/api/add-answer', authenticateUser, addAnswer);
+
+// ✅ Update an answer (requires auth)
+AnsRouter.put('/api/update-answer/:id', authenticateUser, updateAnswer);
+
+// ✅ Delete an answer (requires auth)
+AnsRouter.delete('/api/delete-answer/:id', authenticateUser, deleteAnswer);
+
+// ✅ Get all answers for a question (public)
+AnsRouter.get('/api/answers/:questionId', getAnswersByQuestion);
+
+// ✅ Get single answer by ID (public)
+AnsRouter.get('/api/answer/:id', getSingleAnswer);
+
+// ✅ Vote on an answer (requires auth)
+AnsRouter.put('/api/vote-answer/:id', authenticateUser, voteAnswer);
 
 export  {AnsRouter};

@@ -1,6 +1,7 @@
 // src/controllers/QuestionController.js
 
 import Question from '../models/Question.js';
+import Answer from '../models/Answer.js';
 
 export const createQuestion = async (req, res) => {
   const { title, description, tags } = req.body;
@@ -87,5 +88,32 @@ export const searchQuestions = async (req, res) => {
   } catch (err) {
     console.error('Error searching questions:', err);
     res.status(500).json({ message: 'Server error while searching questions.' });
+  }
+};
+
+export const acceptAnswer = async (req, res) => {
+  const { questionId, answerId } = req.params;
+
+  try {
+    const question = await Question.findById(questionId);
+
+    // Ensure the logged-in user is the question owner
+    if (question.user.toString() !== req.user.id) {
+      return res.status(403).json({ message: 'Only the question owner can accept an answer.' });
+    }
+
+    // Check if the answer belongs to this question
+    const answer = await Answer.findOne({ _id: answerId, question: questionId });
+    if (!answer) {
+      return res.status(404).json({ message: 'Answer not found for this question.' });
+    }
+
+    question.acceptedAnswer = answerId;
+    await question.save();
+
+    res.status(200).json({ message: 'Answer accepted successfully.', acceptedAnswer: answerId });
+  } catch (err) {
+    console.error('Error accepting answer:', err);
+    res.status(500).json({ message: 'Server error while accepting answer.' });
   }
 };

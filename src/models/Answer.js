@@ -4,9 +4,8 @@ import mongoose from 'mongoose';
 
 const answerSchema = new mongoose.Schema(
   {
-    question: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Question',
+    content: {
+      type: String,
       required: true
     },
     user: {
@@ -14,22 +13,19 @@ const answerSchema = new mongoose.Schema(
       ref: 'User',
       required: true
     },
-    description: {
-      type: String,
+    question: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Question',
       required: true
     },
-    votes: {
-      type: Number,
-      default: 0
-    },
-    createdAt: {
-      type: Date,
-      default: Date.now
-    },
-    updatedAt: {
-      type: Date,
-      default: Date.now
-    }
+    upvotes: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User'
+    }],
+    downvotes: [{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User'
+    }]
   },
   { timestamps: true }
 );

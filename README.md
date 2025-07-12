@@ -74,3 +74,85 @@ Built for small communities, teams, or internal orgs looking for a **lightweight
 | Backend      | Node.js + Express |
 | Database| MongoDB |
 
+---
+🔧 Getting Started
+1️⃣ Clone the Repository
+bash
+Copy
+Edit
+git clone https://github.com/yourusername/stackit.git
+cd stackit/server
+2️⃣ Install Dependencies
+bash
+Copy
+Edit
+npm install
+3️⃣ Environment Setup
+Create a .env file in the server/ directory:
+
+env
+Copy
+Edit
+PORT=5000
+MONGO_URI=your_mongodb_connection_string
+JWT_SECRET=your_jwt_secret_key
+
+CLOUDINARY_CLOUD_NAME=your_cloud_name
+CLOUDINARY_API_KEY=your_api_key
+CLOUDINARY_API_SECRET=your_api_secret
+
+OPENAI_API_KEY=your_openai_api_key   # optional
+4️⃣ Start the Development Server
+bash
+Copy
+Edit
+npm run dev
+Server runs on: http://localhost:5000
+
+🌍 Deployment Plan
+Component	Platform
+Backend	Render / Railway
+Frontend	Vercel / Netlify
+Database	MongoDB Atlas
+Media	Cloudinary
+AI	OpenAI API
+
+🧭 Roadmap
+ Core Q&A system
+
+ Threaded answers (Knowledge Trail)
+
+ Verbal answers (voice/video)
+
+ Mentor mode
+
+ AI-powered summaries
+
+ Admin panel
+
+ Real-time notifications
+
+ Mobile responsive PWA
+
+ Weekly mentorship suggestions
+
+💼 Author
+Team
+📧 Email: [your.email@example.com]
+
+📄 License
+This project is licensed under the MIT License.
+Use it freely for academic, learning, or portfolio purposes.
+
+🙌 Contributions Welcome!
+Found a bug? Want to improve something?
+
+Fork the repo
+
+Create your feature branch: git checkout -b feature/YourFeature
+
+Commit your changes
+
+Push to the branch: git push origin feature/YourFeature
+
+Open a pull request

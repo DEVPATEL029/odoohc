@@ -1,37 +1,80 @@
 import { useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
 import AnswerList from "../components/AnswerList";
 import AnswerForm from "../components/AnswerForm";
 
-const dummyAnswers = [
-  { text: "Use the CONCAT() function" },
-  { text: "Try using the + operator" }
-];
-
 const QuestionDetail = () => {
   const { id } = useParams();
+  const [question, setQuestion] = useState(null);
+  const [answers, setAnswers] = useState([]);
 
-  const addAnswer = (answerText) => {
-    dummyAnswers.push({ text: answerText });
-    alert("Answer submitted (but not saved - use backend/localStorage)!");
+  useEffect(() => {
+    const storedQuestions = JSON.parse(localStorage.getItem("questions")) || [];
+    const found = storedQuestions[parseInt(id) - 1]; // ID assumed to be 1-indexed
+    if (found) {
+      setQuestion(found);
+      setAnswers(found.answers || []);
+    }
+  }, [id]);
+
+  const handleAddAnswer = (text) => {
+    const updatedAnswer = {
+      text,
+      timestamp: Date.now(),
+      username: "Guest",
+    };
+
+    const storedQuestions = JSON.parse(localStorage.getItem("questions")) || [];
+    const index = parseInt(id) - 1;
+    if (storedQuestions[index]) {
+      storedQuestions[index].answers = [...(storedQuestions[index].answers || []), updatedAnswer];
+      localStorage.setItem("questions", JSON.stringify(storedQuestions));
+      setAnswers(storedQuestions[index].answers);
+    }
   };
 
+  if (!question) {
+    return <div className="p-4 text-lg text-center text-gray-500">⚠️ Question not found.</div>;
+  }
+
   return (
-    <div className="max-w-3xl mx-auto p-6">
-      <nav className="mb-4 text-gray-600">
-        <span>Home / Question {id}</span>
-      </nav>
-      <h2 className="text-xl font-semibold mb-2">
-        How to join 2 columns in SQL?
-      </h2>
-      <p className="mb-4">
-        I want to combine first and last name in SQL using CONCAT...
-      </p>
+    <div className="min-h-screen px-4 py-8 bg-gray-50">
+      <div className="max-w-3xl p-6 mx-auto bg-white rounded-lg shadow-md">
+        {/* Question Title */}
+        <h1 className="mb-2 text-2xl font-bold text-indigo-700">{question.title}</h1>
 
-      <h3 className="text-lg font-semibold mb-2">Answers:</h3>
-      <AnswerList answers={dummyAnswers} />
+        {/* Question Description */}
+        <p className="mb-4 text-gray-700 whitespace-pre-line">{question.description}</p>
 
-      <h4 className="text-lg font-semibold mt-6">Submit Your Answer</h4>
-      <AnswerForm onSubmit={addAnswer} />
+        {/* Tags */}
+        {question.tags?.length > 0 && (
+          <div className="flex flex-wrap gap-2 mb-4">
+            {question.tags.map((tag, i) => (
+              <span key={i} className="px-2 py-1 text-xs text-indigo-700 bg-indigo-100 rounded-full">
+                #{tag}
+              </span>
+            ))}
+          </div>
+        )}
+
+        <hr className="my-6" />
+
+        {/* Answers */}
+        <div>
+          <h2 className="mb-3 text-xl font-semibold text-gray-800">
+            Answers ({answers.length})
+          </h2>
+          <AnswerList answers={answers} />
+        </div>
+
+        <hr className="my-6" />
+
+        {/* Add New Answer */}
+        <div>
+          <h2 className="mb-2 text-lg font-medium text-gray-800">Your Answer</h2>
+          <AnswerForm onAddAnswer={handleAddAnswer} />
+        </div>
+      </div>
     </div>
   );
 };

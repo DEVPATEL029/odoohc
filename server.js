@@ -5,6 +5,10 @@ import { AuthRouter } from './src/routes/AuthRoutes.js';
 import {connectDB} from './src/db/testConnection.js'
 //import { UserRouter } from './src/routes/UserRoutes';
 
+import QuestionRoutes from ''./src/routes/QuestionRoutes.js';
+import AnswerRoutes from ''./src/routes/AnswerRoutes.js';
+
+
 dotenv.config();
 
 const app = express();
@@ -16,6 +20,10 @@ connectDB();
 // Routes
 app.use(AuthRouter);
 //app.use(UserRouter);
+
+app.use('/api/questions', QuestionRoutes);
+app.use('/api/answers', AnswerRoutes);
+
 
 app.use((req, res, next) => {
     console.log(`Incoming request: ${req.method} ${req.url}`);

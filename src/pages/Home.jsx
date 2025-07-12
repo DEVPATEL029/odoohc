@@ -1,4 +1,3 @@
-// File: src/pages/Home.jsx
 import QuestionCard from "../components/QuestionCard";
 import { Link } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
@@ -9,6 +8,7 @@ const Home = () => {
   const [activeFilter, setActiveFilter] = useState("Newest");
   const [showMoreOptions, setShowMoreOptions] = useState(false);
   const [pageCount, setPageCount] = useState(5);
+  const [currentPage, setCurrentPage] = useState(1);
   const moreRef = useRef();
 
   useEffect(() => {
@@ -40,6 +40,7 @@ const Home = () => {
     return () => window.removeEventListener("resize", updatePageCount);
   }, []);
 
+  // Filter logic
   let filtered = [...questions];
   if (activeFilter === "Unanswered") {
     filtered = filtered.filter((q) => !q.answers || q.answers.length === 0);
@@ -59,14 +60,20 @@ const Home = () => {
       q.description.toLowerCase().includes(search.toLowerCase())
   );
 
+  // Pagination
+  const questionsPerPage = 5;
+  const totalPages = Math.ceil(filtered.length / questionsPerPage);
+  const paginatedQuestions = filtered.slice(
+    (currentPage - 1) * questionsPerPage,
+    currentPage * questionsPerPage
+  );
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
       <header className="bg-gradient-to-r from-indigo-500 to-purple-700 shadow mb-6 relative">
         <div className="w-full flex items-center justify-between px-4 py-4 relative z-10">
-          <h1 className="text-3xl font-extrabold text-white tracking-wide drop-shadow-md">
-            StackIt
-          </h1>
+          <h1 className="text-3xl font-extrabold text-white tracking-wide drop-shadow-md">StackIt</h1>
           <div className="flex items-center gap-2">
             <button className="px-3 py-1 border border-white text-white rounded-full hover:bg-white hover:text-indigo-600 transition-all">
               Login
@@ -165,9 +172,9 @@ const Home = () => {
         </p>
 
         <div className="space-y-4">
-          {filtered.map((q, idx) => (
+          {paginatedQuestions.map((q, idx) => (
             <div className="relative" key={idx}>
-              <QuestionCard id={idx + 1} {...q} />
+              <QuestionCard id={(currentPage - 1) * questionsPerPage + idx + 1} {...q} />
               <div className="absolute top-2 right-2 bg-gray-100 text-sm px-2 py-1 rounded">
                 {(q.answers?.length || Math.floor(Math.random() * 6) + 1)} ans
               </div>
@@ -177,14 +184,31 @@ const Home = () => {
 
         {/* Pagination */}
         <div className="mt-6 flex justify-center items-center gap-2 text-sm">
-          {Array.from({ length: pageCount }, (_, i) => (
+          <button
+            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+            className="px-2 py-1 border rounded hover:bg-gray-100"
+            disabled={currentPage === 1}
+          >
+            &lt;
+          </button>
+          {Array.from({ length: totalPages }, (_, i) => (
             <button
               key={i + 1}
-              className="px-2 py-1 border rounded hover:bg-gray-100"
+              onClick={() => setCurrentPage(i + 1)}
+              className={`px-2 py-1 border rounded hover:bg-gray-100 ${
+                currentPage === i + 1 ? "bg-indigo-600 text-white" : ""
+              }`}
             >
               {i + 1}
             </button>
           ))}
+          <button
+            onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+            className="px-2 py-1 border rounded hover:bg-gray-100"
+            disabled={currentPage === totalPages}
+          >
+            &gt;
+          </button>
         </div>
       </main>
     </div>

@@ -2,8 +2,6 @@
 
 StackIt is a clean, focused, and collaborative Q&A forum designed for simplicity and knowledge sharing. Whether you're a developer seeking help or a mentor sharing insights, StackIt keeps the experience distraction-free and efficient — just questions, answers, and community.
 
----
-
 ## Why StackIt?
 
 Unlike traditional forums cluttered with noise, **StackIt** emphasizes:
@@ -14,8 +12,6 @@ Unlike traditional forums cluttered with noise, **StackIt** emphasizes:
 
 Built for small communities, teams, or internal orgs looking for a **lightweight StackOverflow alternative**.
 
----
-
 ##  User Roles & Permissions
 
 | Role   | Capabilities |
@@ -23,8 +19,6 @@ Built for small communities, teams, or internal orgs looking for a **lightweight
 | **Guest** | View all questions & answers |
 | **User**  | Register, log in, post questions/answers, vote |
 | **Admin** | Moderate inappropriate or flagged content |
-
----
 
 ##  Key Features
 
@@ -62,8 +56,6 @@ Built for small communities, teams, or internal orgs looking for a **lightweight
   - ✅ Mentioned you via `@username`
 - Dropdown panel with latest alerts
 
----
-
 ##  Tech Stack
 
 | Layer        | Stack                            |
@@ -74,7 +66,6 @@ Built for small communities, teams, or internal orgs looking for a **lightweight
 | Backend      | Node.js + Express |
 | Database| MongoDB |
 
----
 ## Getting Started
 ### 1️ Clone the Repository
 ```
@@ -109,36 +100,19 @@ npm run dev
 ```
 Server runs on: `http://localhost:5000`
 
-## Deployment Plan
-Component	Platform
-Backend	Render / Railway
-Frontend	Vercel / Netlify
-Database	MongoDB Atlas
-Media	Cloudinary
-AI	OpenAI API
-
 ## Roadmap
- Core Q&A system
-
- Threaded answers (Knowledge Trail)
-
- Verbal answers (voice/video)
-
- Mentor mode
-
- AI-powered summaries
-
- Admin panel
-
- Real-time notifications
-
- Mobile responsive PWA
-
- Weekly mentorship suggestions
+- Core Q&A system
+- Threaded answers (Knowledge Trail)
+- Verbal answers (voice/video)
+- Mentor mode
+- AI-powered summaries
+- Admin panel
+- Real-time notifications
+- Mobile responsive PWA
+- Weekly mentorship suggestions
 
 ## Author
 Team
-📧 Email: [your.email@example.com]
 
 ## License
 This project is licensed under the MIT License.
@@ -146,13 +120,8 @@ Use it freely for academic, learning, or portfolio purposes.
 
 ## Contributions Welcome!
 Found a bug? Want to improve something?
-
-Fork the repo
-
-Create your feature branch: git checkout -b feature/YourFeature
-
-Commit your changes
-
-Push to the branch: git push origin feature/YourFeature
-
-Open a pull request
+1. Fork the repo
+2. Create your feature branch: `git checkout -b feature/YourFeature`
+3. Commit your changes
+4. Push to the branch: `git push origin feature/YourFeature`
+5. Open a pull request

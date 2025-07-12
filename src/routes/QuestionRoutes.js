@@ -10,7 +10,6 @@ import {
   searchQuestions,
   acceptAnswer
 } from '../Controller/QuestionController.js';
-import { upvoteAnswer,downvoteAnswer } from '../Controller/AnswerController.js';
 import { Authorization } from '../middleware/Auth.js';
 
 const QueRouter = express.Router();
@@ -32,10 +31,6 @@ QueRouter.put('/api/update-question/:id', Authorization, updateQuestion);
 
 //delete a question only logged in user can
 QueRouter.delete('/api/delete-question/:id', Authorization, deleteQuestion);
-
-// For voting
-QueRouter.put('api/:id/upvote', Authorization, upvoteAnswer);
-QueRouter.put('api/:id/downvote', Authorization, downvoteAnswer);
 
 // For accepting answer
 QueRouter.put('api/:questionId/accept-answer/:answerId', authenticateUser, acceptAnswer);

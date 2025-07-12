@@ -25,6 +25,15 @@ const userSchema = new mongoose.Schema({
   created_by: {
     type: String, // or ObjectId if referring to another collection
     required: true
+  },
+  role: {
+    type: String,
+    enum: ['user', 'admin'],
+    default: 'user'
+  },
+  banned: {
+    type: Boolean,
+    default: false
   }
 }, { timestamps: true });  // Adds createdAt and updatedAt automatically
 

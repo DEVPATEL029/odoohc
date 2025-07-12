@@ -4,6 +4,8 @@ import express from 'express';
 import { AuthRouter } from './src/routes/AuthRoutes.js';
 import {connectDB} from './src/db/testConnection.js'
 //import { UserRouter } from './src/routes/UserRoutes';
+import {QueRouter} from './src/routes/QuestionRoutes.js';
+import {TagRouter} from './src/routes/TagRouter.js';
 
 dotenv.config();
 
@@ -15,6 +17,8 @@ connectDB();
 
 // Routes
 app.use(AuthRouter);
+app.use(QueRouter);
+app.use(TagRouter);
 //app.use(UserRouter);
 
 app.use((req, res, next) => {

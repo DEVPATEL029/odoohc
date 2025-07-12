@@ -1,6 +1,7 @@
 import bcrypt from 'bcryptjs';
 import { User } from '../models/User.js';
 import { validateEmail, validatePassword, validateUsername } from '../utils/validation.js';
+import jwt from 'jsonwebtoken'
 
 export const register = async (req, res) => {
   const { first_name, last_name, email, password, created_by } = req.body;
@@ -48,35 +49,35 @@ export const login = async (req, res) => {
   const { email, password } = req.body;
 
   try {
-    // Check if user exists
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(400).json({ error: "User doesn't exist with this email." });
+      return res.status(400).json({ message: "Invalid email or password." });
     }
 
-    // Compare password
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(400).json({ error: 'Invalid password.' });
+      return res.status(400).json({ message: "Invalid email or password." });
     }
 
-    // ✅ If using JWT, you can generate a token here
-    // For example:
-    // import jwt from 'jsonwebtoken';
-    // const token = jwt.sign({ id: user._id }, 'your_jwt_secret', { expiresIn: '1h' });
+    // ✅ Generate JWT token here
+    const token = jwt.sign(
+      { id: user._id, email: user.email },
+      process.env.JWT_SECRET,
+      { expiresIn: "1d" }
+    );
 
     res.status(200).json({
-      message: 'Login successful!',
+      message: "Login successful!",
+      token,  // include token in response
       user: {
         id: user._id,
         first_name: user.first_name,
         last_name: user.last_name,
-        email: user.email,
-      },
-      // token
+        email: user.email
+      }
     });
   } catch (err) {
     console.error('Error during login:', err);
-    res.status(500).json({ message: 'Login failed due to server error.' });
+    res.status(500).json({ message: "Server error during login." });
   }
 };

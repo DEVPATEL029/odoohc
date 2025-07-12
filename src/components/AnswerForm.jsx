@@ -29,7 +29,7 @@ const AnswerForm = ({ onAddAnswer }) => {
       <div className="flex gap-3">
         <button
           type="submit"
-          className="px-4 py-2 text-white bg-indigo-600 rounded-md hover:bg-indigo-700 transition-all"
+          className="px-4 py-2 text-white transition-all bg-indigo-600 rounded-md hover:bg-indigo-700"
         >
           Post Answer
         </button>
@@ -37,7 +37,7 @@ const AnswerForm = ({ onAddAnswer }) => {
         <button
           type="button"
           onClick={handleCancel}
-          className="px-4 py-2 text-gray-700 bg-gray-200 rounded-md hover:bg-gray-300 transition-all"
+          className="px-4 py-2 text-gray-700 transition-all bg-gray-200 rounded-md hover:bg-gray-300"
         >
           Cancel
         </button>

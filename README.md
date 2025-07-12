@@ -90,7 +90,7 @@ npm install
 ```
 
 ### 3️ Environment Setup
-Create a .env file in the server/ directory:
+Create a `.env` file in the `server/` directory:
 ```
 env
 PORT=5000
@@ -106,8 +106,8 @@ OPENAI_API_KEY=your_openai_api_key   # optional
 ```
 bash
 npm run dev
-Server runs on: http://localhost:5000
 ```
+Server runs on: `http://localhost:5000`
 
 ## Deployment Plan
 Component	Platform

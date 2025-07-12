@@ -125,3 +125,10 @@ Found a bug? Want to improve something?
 3. Commit your changes
 4. Push to the branch: `git push origin feature/YourFeature`
 5. Open a pull request
+
+   ## TEAM MEMBERS OF TEAM DEVIL
+   1.DEV PATEL
+   2.RIYA PATEL
+   3.MEET PATEL
+   4.MITALI PATEL
+   

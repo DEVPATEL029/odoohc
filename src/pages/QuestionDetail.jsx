@@ -43,15 +43,21 @@ const QuestionDetail = () => {
         {/* Question Title */}
         <h1 className="mb-2 text-2xl font-bold text-indigo-700">{question.title}</h1>
 
-        {/* Question Description */}
-        <p className="mb-4 text-gray-700 whitespace-pre-line">{question.description}</p>
+        {/* Render Description as HTML */}
+        <div
+          className="mb-4 text-gray-700"
+          dangerouslySetInnerHTML={{ __html: question.description }}
+        ></div>
 
-        {/* Tags */}
-        {question.tags?.length > 0 && (
-          <div className="flex flex-wrap gap-2 mb-4">
-            {question.tags.map((tag, i) => (
-              <span key={i} className="px-2 py-1 text-xs text-indigo-700 bg-indigo-100 rounded-full">
-                #{tag}
+        {/* Tags Section */}
+        {question.tags && question.tags.length > 0 && (
+          <div className="flex flex-wrap gap-2 mb-6">
+            {question.tags.map((tag, index) => (
+              <span
+                key={index}
+                className="px-2 py-1 text-xs text-blue-800 bg-blue-100 rounded-full"
+              >
+                {tag}
               </span>
             ))}
           </div>
@@ -59,7 +65,6 @@ const QuestionDetail = () => {
 
         <hr className="my-6" />
 
-        {/* Answers */}
         <div>
           <h2 className="mb-3 text-xl font-semibold text-gray-800">
             Answers ({answers.length})
@@ -69,7 +74,6 @@ const QuestionDetail = () => {
 
         <hr className="my-6" />
 
-        {/* Add New Answer */}
         <div>
           <h2 className="mb-2 text-lg font-medium text-gray-800">Your Answer</h2>
           <AnswerForm onAddAnswer={handleAddAnswer} />

@@ -71,14 +71,14 @@ const Home = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <header className="bg-gradient-to-r from-indigo-500 to-purple-700 shadow mb-6 relative">
-        <div className="w-full flex items-center justify-between px-4 py-4 relative z-10">
-          <h1 className="text-3xl font-extrabold text-white tracking-wide drop-shadow-md">StackIt</h1>
+      <header className="relative mb-6 shadow bg-gradient-to-r from-indigo-500 to-purple-700">
+        <div className="relative z-10 flex items-center justify-between w-full px-4 py-4">
+          <h1 className="text-3xl font-extrabold tracking-wide text-white drop-shadow-md">StackIt</h1>
           <div className="flex items-center gap-2">
-            <button className="px-3 py-1 border border-white text-white rounded-full hover:bg-white hover:text-indigo-600 transition-all">
+            <button className="px-3 py-1 text-white transition-all border border-white rounded-full hover:bg-white hover:text-indigo-600">
               Login
             </button>
-            <button className="px-3 py-1 border border-white text-white rounded-full hover:bg-white hover:text-indigo-600 transition-all">
+            <button className="px-3 py-1 text-white transition-all border border-white rounded-full hover:bg-white hover:text-indigo-600">
               Signup
             </button>
           </div>
@@ -87,10 +87,10 @@ const Home = () => {
       </header>
 
       {/* Filter + Search + Ask */}
-      <div className="max-w-4xl mx-auto px-4 mb-6">
-        <div className="flex flex-wrap md:flex-nowrap gap-2 items-center">
+      <div className="max-w-4xl px-4 mx-auto mb-6">
+        <div className="flex flex-wrap items-center gap-2 md:flex-nowrap">
           {/* Filter Buttons */}
-          <div className="flex gap-2 flex-wrap">
+          <div className="flex flex-wrap gap-2">
             <button
               onClick={() => {
                 setActiveFilter("Newest");
@@ -126,7 +126,7 @@ const Home = () => {
                 More ▾
               </button>
               {showMoreOptions && (
-                <div className="absolute z-10 bg-white border rounded shadow w-48 mt-1">
+                <div className="absolute z-10 w-48 mt-1 bg-white border rounded shadow">
                   {["Most Answered", "Least Answered", "Oldest First", "My Questions"].map((option) => (
                     <button
                       key={option}
@@ -157,7 +157,7 @@ const Home = () => {
 
           {/* Ask Button */}
           <Link to="/ask">
-            <button className="px-4 py-2 bg-indigo-600 text-white rounded-full shadow hover:bg-indigo-700 transition-all whitespace-nowrap">
+            <button className="px-4 py-2 text-white transition-all bg-indigo-600 rounded-full shadow hover:bg-indigo-700 whitespace-nowrap">
               Ask New Question
             </button>
           </Link>
@@ -165,9 +165,9 @@ const Home = () => {
       </div>
 
       {/* Questions List */}
-      <main className="p-4 max-w-4xl mx-auto">
+      <main className="max-w-4xl p-4 mx-auto">
         {/* Show how many questions */}
-        <p className="text-gray-600 mb-4">
+        <p className="mb-4 text-gray-600">
           Showing {filtered.length} of {questions.length} available question{questions.length !== 1 ? "s" : ""}
         </p>
 
@@ -175,7 +175,7 @@ const Home = () => {
           {paginatedQuestions.map((q, idx) => (
             <div className="relative" key={idx}>
               <QuestionCard id={(currentPage - 1) * questionsPerPage + idx + 1} {...q} />
-              <div className="absolute top-2 right-2 bg-gray-100 text-sm px-2 py-1 rounded">
+              <div className="absolute px-2 py-1 text-sm bg-gray-100 rounded top-2 right-2">
                 {(q.answers?.length || Math.floor(Math.random() * 6) + 1)} ans
               </div>
             </div>
@@ -183,7 +183,7 @@ const Home = () => {
         </div>
 
         {/* Pagination */}
-        <div className="mt-6 flex justify-center items-center gap-2 text-sm">
+        <div className="flex items-center justify-center gap-2 mt-6 text-sm">
           <button
             onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
             className="px-2 py-1 border rounded hover:bg-gray-100"
